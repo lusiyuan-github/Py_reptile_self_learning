@@ -2,29 +2,7 @@
 
 <--关于python 爬虫自学过程中的重点-->
 
-
-- [Py_reptile_self_learning](#py-reptile-self-learning)
-  * [零. 版权声明](#------)
-  * [一. 前提先知](#------)
-    + [(1) robots.txt 协议](#-1--robotstxt---)
-    + [(2) http 协议](#-2--http---)
-      - [常用请求头信息](#-------)
-      - [常用响应头信息](#-------)
-    + [(3) https 协议](#-3--https---)
-    + [(4) 加密方式](#-4------)
-      - [对称秘钥加密](#------)
-      - [非对称秘钥加密](#-------)
-      - [证书秘钥加密](#------)
-  * [二. request模块](#--request--)
-    + [(1) 用途](#-1----)
-    + [(2) 使用流程](#-2------)
-      - [安装导入](#----)
-      - [指定url](#--url)
-      - [发起请求](#----)
-      - [获取响应数据](#------)
-      - [持久化存储响应数据](#---------)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+[TOC]
 
 
 
@@ -104,10 +82,38 @@ import requests
 url = 'https://www.sogou.com/'
 ```
 
-
-
 #### 发起请求
+
+```python
+response = requests.get(url=url)
+# requests.get 返回一个响应对象
+```
 
 #### 获取响应数据
 
+```python
+page_text = response.text
+print(page_text)
+```
+
 #### 持久化存储响应数据
+
+```python
+with open('./sogou.html','w',encoding='utf-8') as fp:
+    fp.write(page_text)
+```
+
+#### 完整代码
+
+```python
+import requests
+if __name__ == '__main__':
+    url = 'https://www.sogou.com/'
+    response = requests.get(url=url)
+    # requests.get 返回一个响应对象
+    page_text = response.text
+    print(page_text)
+    with open('./sogou.html','w',encoding='utf-8') as fp:
+        fp.write(page_text)
+```
+
