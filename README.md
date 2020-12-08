@@ -76,10 +76,10 @@ import requests
 
 #### 指定url
 
-（下面均以访问搜狗为例）
+（下面均以访问b站为例）
 
 ```python
-url = 'https://www.sogou.com/'
+url = 'https://www.bilibili.com/'
 ```
 
 #### 发起请求
@@ -99,7 +99,7 @@ print(page_text)
 #### 持久化存储响应数据
 
 ```python
-with open('./sogou.html','w',encoding='utf-8') as fp:
+with open('./bilibili.html','w',encoding='utf-8') as fp:
     fp.write(page_text)
 ```
 
@@ -108,12 +108,12 @@ with open('./sogou.html','w',encoding='utf-8') as fp:
 ```python
 import requests
 if __name__ == '__main__':
-    url = 'https://www.sogou.com/'
+    url = 'https://www.bilibili.com/'
     response = requests.get(url=url)
     # requests.get 返回一个响应对象
     page_text = response.text
     print(page_text)
-    with open('./sogou.html','w',encoding='utf-8') as fp:
+    with open('./bilibili.html','w',encoding='utf-8') as fp:
         fp.write(page_text)
 ```
 
