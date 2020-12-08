@@ -66,13 +66,23 @@ Content - Type : 服务器响应回客户端数据类型（eg：float , json）
 
 ### (2) 使用流程
 
-#### 安装
+#### 安装导入
 
 win+r   cmd    pip install requests
+
+```python
+import requests
+```
 
 #### 指定url
 
 （下面均以访问搜狗为例）
+
+```python
+url = 'https://www.sogou.com/'
+```
+
+
 
 #### 发起请求
 
