@@ -120,3 +120,24 @@ if __name__ == '__main__':
 ### (3) 实战演练
 
 #### 简易网页采集器
+
+```python
+#搜索b站网页
+import requests
+
+if __name__ == '__main__':
+    url = 'https://search.bilibili.com/all'
+    kw = input("输入搜索：")
+    param = {
+        'keyword': kw
+    }
+    response = requests.get(url=url, params=param)
+    # params存入的是字典，是url后续要增加的关键字
+    page_text = response.text
+    fileName = kw+'.html'
+    with open(fileName, 'w', encoding='utf-8') as fp:
+        fp.write(page_text)
+    print("已经收集到"+kw+'数据')
+
+```
+
