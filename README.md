@@ -12,9 +12,7 @@
 
 本文章参考b站用户：**路飞学城IT** 旗下视频”2020年Python爬虫全套课程（学完可做项目）“总结归纳，仅供为个人学习使用。
 
-[^]: 下文于day1-2（2020.12.7——2020.12.8）编写
-
-
+[^]: 下文于（2020.12.7——2020.12.8）编写
 
 ## 一. 前提先知
 
@@ -117,6 +115,8 @@ if __name__ == '__main__':
         fp.write(page_text)
 ```
 
+[^]: 下文于 2020.12.9 编写
+
 ### (3) 实战演练
 
 #### 简易网页采集器
@@ -126,6 +126,8 @@ if __name__ == '__main__':
 import requests
 
 if __name__ == '__main__':
+    #https://search.bilibili.com/all?keyword=python 这是在浏览器进行b站搜索python的url
+    #可见在 ? 之前为主要url，后续keyword等为需要存入params字典的部分
     url = 'https://search.bilibili.com/all'
     kw = input("输入搜索：")
     param = {
@@ -141,6 +143,43 @@ if __name__ == '__main__':
 
 ```
 
-##### UA伪装
+##### UA伪装（反反爬策略）
 
-程序编写时（爬虫时）的User - Agent 与浏览器直接访问时候User - Agent 不同。为了防止服务器监测时只允许浏览器模式的正常访问，故程序需要模拟某款浏览器进行访问，也就是需要进行UA伪装
+程序编写时（爬虫时）的User - Agent 与浏览器直接访问时候User - Agent 不同。为了防止服务器监测时只允许浏览器模式的正常访问，而阻止一些爬虫的非正常访问（UA监测），故程序需要模拟某款浏览器进行访问，也就是需要进行UA伪装
+
+```python
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.55'
+    }
+    #user-agent 在网页F12中Network里Request Headers里，本headers为Windows系统Microsoft Edge访问结果
+```
+
+##### 完整代码
+
+```python
+import requests
+
+if __name__ == '__main__':
+    url = 'https://search.bilibili.com/all'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.67 Safari/537.36 Edg/87.0.664.55'
+    }
+    kw = input("输入搜索：")
+    param = {
+        'keyword': kw
+    }
+    response = requests.get(url=url, params=param, headers=headers)
+    # headers存入的是字典，是UA伪装时候的User——Agent
+    page_text = response.text
+    fileName = kw + '.html'
+    with open(fileName, 'w', encoding='utf-8') as fp:
+        fp.write(page_text)
+    print("已经收集到" + kw + '数据')
+
+```
+
+
+
+
+
+#### 破解百度翻译
