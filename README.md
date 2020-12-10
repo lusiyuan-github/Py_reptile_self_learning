@@ -211,5 +211,32 @@ if __name__ == '__main__':
 
 ```
 
+##### 破解搜狗翻译（自我尝试）
 
+```python
+import requests
+import json
+
+if __name__ == '__main__':
+    url = 'https://fanyi.sogou.com/reventondc/suggV3'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.57'
+    }
+    word = input("输入一个单词：")
+    data = {
+        'from': 'auto',
+        'to': 'zh-CHS',
+        'client': 'wap',
+        'text': word,
+        'uuid': 'c0dbe681-bbcb-4079-8d2e-eaa936baef24',
+        'pid': 'sogou-dict-vr',
+        'addSugg': 'on'
+    }
+    respond = requests.post(url=url,data=data,headers=headers)
+    dic = respond.json()
+    filename = word+'.json'
+    with open(filename, 'w', encoding='utf-8') as fp:
+        json.dump(dic['sugg'], fp=fp, ensure_ascii=False)
+    # print(dic['sugg'])
+```
 
