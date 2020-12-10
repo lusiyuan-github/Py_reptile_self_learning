@@ -373,7 +373,7 @@ if __name__ == '__main__':
 
 ##### 阿贾克斯请求
 
-在f12的Network中XHR中可以查看为阿贾克斯请求生成的sug，其为post请求，url均为https://fanyi.baidu.com/sug
+https://baike.baidu.com/item/ajax/8425 关于ajax请求的定义，在浏览器中f12的Network中XHR中可以查看为阿贾克斯请求生成的sug，其为post请求，url均为https://fanyi.baidu.com/sug
 
 ```python
 import requests
@@ -398,4 +398,5 @@ if __name__ == '__main__':
 
 ```
 
->>>>>>> Stashed changes
+
+
