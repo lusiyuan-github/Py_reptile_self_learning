@@ -2,7 +2,7 @@
 
 <--关于python 爬虫自学过程中的重点-->
 
-网页版： http://htmlpreview.github.io/?https://github.com/lusiyuan-github/Py_reptile_self_learning/blob/main/%E5%AD%A6%E5%AD%A6%E5%AD%A6.html
+网页版： 下载zip后的  学学学.html    
 
 [TOC]
 
