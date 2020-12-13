@@ -4,6 +4,8 @@
 
 <--关于python 爬虫自学过程中的重点-->
 
+<--由于爬虫有一定时效性，请自行判断是否有过时信息-->
+
 网页版： 下载zip后的  学学学.html    
 
 [TOC]
@@ -310,3 +312,25 @@ if __name__ == '__main__':
         fp.write(respond_text)
 ```
 
+#### NMPA化妆品许可爬取
+
+在下述爬取中，打开html会发现请求异常，因为里面数据跟浏览网页不是相同的url，考虑ajax
+
+```python
+import requests
+if __name__ == '__main__':
+    url = 'http://scxk.nmpa.gov.cn:81/xk/'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60'
+    }
+
+    respond = requests.post(url=url,headers=headers)
+    respond_text = respond.text
+    filename = '药监总局化妆品许可证.html'
+    with open(filename,'w',encoding='utf-8') as fp:
+        fp.write(respond_text)
+```
+
+可以看到对应url中没有企业信息：
+
+![image-20201213191012541](C:\Users\卢思远\AppData\Roaming\Typora\typora-user-images\image-20201213191012541.png)
