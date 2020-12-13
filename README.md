@@ -81,7 +81,7 @@ import requests
 （下面均以访问b站为例）
 
 ```python
-url = 'https://www.bilibili.com/'
+url = 'https://www.bilibili.com/''
 ```
 
 #### 发起请求
@@ -258,7 +258,55 @@ if __name__ == '__main__':
     # print(dic['sugg'])
 ```
 
-[^]: 2020.12.13
+[^]: 2020 .12. 13
 
 爬取豆瓣电影
+
+```python
+import requests
+import json
+
+if __name__ == '__main__':
+    url = 'https://movie.douban.com/j/chart/top_list'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60'
+    }
+    param = {
+        'type': '24',
+        'interval_id': '100:90',
+        'action':'',
+        'start':' 20',	#开始值
+        'limit': '20'	#一次取出多少
+    }
+    respond = requests.get(url=url,params=param, headers=headers)
+    respond_json = respond.json()
+
+    with open('./douban.json', 'w', encoding='utf-8') as fp:
+        json.dump(respond_json, fp=fp, ensure_ascii=False)
+
+```
+
+#### 爬取肯德基地址
+
+```python
+import requests
+if __name__ == '__main__':
+    url = 'http://www.kfc.com.cn/kfccda/ashx/GetStoreList.ashx?op=keyword'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60'
+    }
+    name = input('输入查询城市：')
+    data = {
+        'cname':'' ,
+        'pid': '',
+        'keyword': name,
+        'pageIndex': '1',
+        'pageSize': '10',
+    }
+    respond = requests.post(url=url,data=data,headers=headers)
+    respond_text = respond.text
+    filename = name+'.txt'
+    with open(filename,'w',encoding='utf-8') as fp:
+        fp.write(respond_text)
+```
 
