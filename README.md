@@ -1,3 +1,5 @@
+
+
 # Py_reptile_self_learning
 
 <--关于python 爬虫自学过程中的重点-->
@@ -214,6 +216,16 @@ if __name__ == '__main__':
 ```
 
 [^]: 下文于 2020.12.10 编写
+
+##### params和data区别
+
+requests模块发送请求有data、params两种携带参数的方法。
+
+params在get请求中使用，data在post请求中使用。
+
+params是往url后面添加参数，data是成为表单形式，是一个request body。![img](https://img-blog.csdn.net/20180207160701009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbmppbmVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
+![img](https://img-blog.csdn.net/20180207160808762?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbmppbmVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 
 
