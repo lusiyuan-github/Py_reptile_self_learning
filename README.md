@@ -225,11 +225,11 @@ requests模块发送请求有data、params两种携带参数的方法。
 
 params在get请求中使用，data在post请求中使用。
 
-params是往url后面添加参数，data是成为表单形式，是一个request body。![img](https://img-blog.csdn.net/20180207160701009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbmppbmVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+params是往url后面添加参数，data是成为表单形式，是一个request body。
+
+![img](https://img-blog.csdn.net/20180207160701009?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbmppbmVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
 
 ![img](https://img-blog.csdn.net/20180207160808762?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2hlbmppbmVuZw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
-
-
 
 ##### 破解搜狗翻译（自我尝试）
 
@@ -334,3 +334,398 @@ if __name__ == '__main__':
 可以看到对应url中没有企业信息：
 
 ![image-20201213191012541](C:\Users\卢思远\AppData\Roaming\Typora\typora-user-images\image-20201213191012541.png)
+
+ajax请求：
+
+```python
+import requests
+import json
+if __name__ == '__main__':
+    url = 'http://scxk.nmpa.gov.cn:81/xk/itownet/portalAction.do?method=getXkzsList'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60'
+    }
+    data = {
+        'on': 'true',
+        'page': '1',
+        'pageSize': '15',
+        'productName': '',
+        'conditionType': '1',
+        'applyname': '',
+        'applysn': ''
+    }
+    respond = requests.post(url=url, data= data,headers=headers)
+    respond_json = respond.json()
+    filename = '药监总局化妆品许可证.json'
+    with open(filename, 'w', encoding='utf-8') as fp:
+        json.dump(respond_json,fp=fp,ensure_ascii=False)
+
+```
+
+可以看到在得到的json数据里面，每个厂家对应独有的一个ID，而打开该厂家详细信息，发现其url后面多增加的与ID相同，于是爬取详细页面信息便可以从ID考虑
+
+```json
+{
+    "filesize":"",
+    "keyword":"",
+    "list":[
+        {
+            "ID":"49fd67573d6641fabb9987cb83b1d876",
+            "EPS_NAME":"现代百朗德生物科技（江苏）有限公司",
+            "PRODUCT_SN":"苏妆20180010",
+            "CITY_CODE":"85",
+            "XK_COMPLETE_DATE":{
+                "date":11,
+                "day":5,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607616000000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2023-05-27",
+            "QF_MANAGER_NAME":"江苏省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91320684061855846T",
+            "XC_DATE":"2020-12-11",
+            "NUM_":1
+        },
+        {
+            "ID":"ea278b325af543998b5e0a1c2cc482ba",
+            "EPS_NAME":"英德市藻米美妆产业有限公司",
+            "PRODUCT_SN":"粤妆20190114",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":10,
+                "day":4,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607529600000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2024-06-05",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91441881MA522GUR4Q",
+            "XC_DATE":"2020-12-10",
+            "NUM_":2
+        },
+        {
+            "ID":"d4f024a2c7764c0596ea0c30ba3f89a0",
+            "EPS_NAME":"成都盛世名妆化妆品有限责任公司",
+            "PRODUCT_SN":"川妆20160033",
+            "CITY_CODE":"165",
+            "XK_COMPLETE_DATE":{
+                "date":10,
+                "day":4,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607529600000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2021-12-06",
+            "QF_MANAGER_NAME":"四川省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"915101156630153180",
+            "XC_DATE":"2020-12-10",
+            "NUM_":3
+        },
+        {
+            "ID":"0ab5512d518e4f7591b1ec160ad15d93",
+            "EPS_NAME":"重庆碧海源日化用品有限公司",
+            "PRODUCT_SN":"渝妆20160009",
+            "CITY_CODE":"450",
+            "XK_COMPLETE_DATE":{
+                "date":9,
+                "day":3,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607443200000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2021-11-02",
+            "QF_MANAGER_NAME":"重庆市药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91500113345941893U",
+            "XC_DATE":"2020-12-09",
+            "NUM_":4
+        },
+        {
+            "ID":"99b86a2a99c24d3bb292ae85070007d4",
+            "EPS_NAME":"哈尔滨北星药业有限公司",
+            "PRODUCT_SN":"黑妆20180001",
+            "CITY_CODE":"266",
+            "XK_COMPLETE_DATE":{
+                "date":9,
+                "day":3,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607443200000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2023-03-05",
+            "QF_MANAGER_NAME":"哈尔滨新区管理委员会行政审批局",
+            "BUSINESS_LICENSE_NUMBER":"91230109MA1CAW3J6T",
+            "XC_DATE":"2020-12-09",
+            "NUM_":5
+        },
+        {
+            "ID":"8506f601a98341449960e330f1a8144e",
+            "EPS_NAME":"深圳市纳家生活科技有限公司",
+            "PRODUCT_SN":"粤妆20200244",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":8,
+                "day":2,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607356800000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2025-12-07",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440300MA5ET4B082",
+            "XC_DATE":"2020-12-08",
+            "NUM_":6
+        },
+        {
+            "ID":"e3df927a54034119bdb5247b66b04ef5",
+            "EPS_NAME":"广东御芳泽生物科技有限公司",
+            "PRODUCT_SN":"粤妆20200243",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":8,
+                "day":2,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607356800000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2025-12-07",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440605MA54WN4K67",
+            "XC_DATE":"2020-12-08",
+            "NUM_":7
+        },
+        {
+            "ID":"100f65863b7148639384033e2b020509",
+            "EPS_NAME":"深圳市三浦天然化妆品有限公司",
+            "PRODUCT_SN":"粤妆20160861",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":8,
+                "day":2,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607356800000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2021-10-10",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440300781374493Q",
+            "XC_DATE":"2020-12-08",
+            "NUM_":8
+        },
+        {
+            "ID":"5d471228e6cf46b0b9fd6d6776275b7f",
+            "EPS_NAME":"辽宁佩兰日化有限公司",
+            "PRODUCT_SN":"辽妆20200010",
+            "CITY_CODE":"291",
+            "XK_COMPLETE_DATE":{
+                "date":8,
+                "day":2,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607356800000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2025-12-07",
+            "QF_MANAGER_NAME":"辽宁省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91210600MA10ACBH51",
+            "XC_DATE":"2020-12-08",
+            "NUM_":9
+        },
+        {
+            "ID":"6eec540e8e0640768e77b56c603a3a0e",
+            "EPS_NAME":"贵州艾力康中草药开发有限公司",
+            "PRODUCT_SN":"贵妆20180004",
+            "CITY_CODE":"254",
+            "XK_COMPLETE_DATE":{
+                "date":8,
+                "day":2,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607356800000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2023-06-19",
+            "QF_MANAGER_NAME":"贵州省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91522728308716638K",
+            "XC_DATE":"2020-12-08",
+            "NUM_":10
+        },
+        {
+            "ID":"4abdb635d639412492b5b63d47f9d5c7",
+            "EPS_NAME":"广州顾元化妆品有限公司",
+            "PRODUCT_SN":"粤妆20200241",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":7,
+                "day":1,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607270400000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2025-12-06",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440101MA9UKH6T11",
+            "XC_DATE":"2020-12-07",
+            "NUM_":11
+        },
+        {
+            "ID":"2523428fdd43474f8404be84210b753b",
+            "EPS_NAME":"广州秋雨生物科技有限公司",
+            "PRODUCT_SN":"粤妆20180152",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":7,
+                "day":1,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607270400000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2023-07-02",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440114093598151W",
+            "XC_DATE":"2020-12-07",
+            "NUM_":12
+        },
+        {
+            "ID":"242a973f8aa74cb284c0ae9a21b4f123",
+            "EPS_NAME":"广州博养堂健康产业有限公司",
+            "PRODUCT_SN":"粤妆20170286",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":7,
+                "day":1,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607270400000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2022-02-16",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440101355799085E",
+            "XC_DATE":"2020-12-07",
+            "NUM_":13
+        },
+        {
+            "ID":"f29383b9cd4c43cf973dbdf16203aa6a",
+            "EPS_NAME":"广州市芊彩化妆品有限公司",
+            "PRODUCT_SN":"粤妆20161086",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":7,
+                "day":1,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607270400000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2025-12-06",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"91440101783779793Q",
+            "XC_DATE":"2020-12-07",
+            "NUM_":14
+        },
+        {
+            "ID":"e671d00b0ff149018f1faf5b897de3cf",
+            "EPS_NAME":"广州天香生物科技有限公司",
+            "PRODUCT_SN":"粤妆20160165",
+            "CITY_CODE":null,
+            "XK_COMPLETE_DATE":{
+                "date":7,
+                "day":1,
+                "hours":0,
+                "minutes":0,
+                "month":11,
+                "nanos":0,
+                "seconds":0,
+                "time":1607270400000,
+                "timezoneOffset":-480,
+                "year":120
+            },
+            "XK_DATE":"2023-09-20",
+            "QF_MANAGER_NAME":"广东省药品监督管理局",
+            "BUSINESS_LICENSE_NUMBER":"914401110589171106",
+            "XC_DATE":"2020-12-07",
+            "NUM_":15
+        }
+    ],
+    "orderBy":"createDate",
+    "orderType":"desc",
+    "pageCount":361,
+    "pageNumber":1,
+    "pageSize":15,
+    "property":"",
+    "totalCount":5406
+}
+```
+
+、
+
+
+
