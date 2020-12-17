@@ -534,5 +534,37 @@ if __name__ == '__main__':
 
 可是经过访问对应url发现，其增加ID后的页面仍然为ajax请求的数据，观察post请求里data发现，里面data只有ID一个值，不同的页面的ajax请求的url都为http://scxk.nmpa.gov.cn:81/xk/itownet/portalAction.do?method=getXkzsById于是可以得出最终程序。
 
-
+```python
+import requests
+import json
+if __name__ == '__main__':
+   url = 'http://scxk.nmpa.gov.cn:81/xk/itownet/portalAction.do?method=getXkzsList'
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60'
+    }
+    data = {
+        'on': 'true',
+        'page': '1',
+        'pageSize': '15',
+        'productName': '',
+        'conditionType': '1',
+        'applyname': '',
+        'applysn': ''
+    }
+    respond = requests.post(url=url, data=data, headers=headers)
+    respond_json = respond.json()
+    id_list = []    #存储企业ID
+    for dic in respond_json['list']:
+        id_list.append(dic['ID'])
+    print(id_list)
+    post_url = 'http://scxk.nmpa.gov.cn:81/xk/itownet/portalAction.do?method=getXkzsById'
+    for id in id_list:
+        data ={
+            'id':id
+        }
+        detail_json = requests.post(url=post_url,data=data,headers=headers).json()
+        print(detail_json)
+    with open('./数据.json','w',encoding='utf-8') as fp:
+        json.dump(detail_json,fp=fp,ensure_ascii=False)
+```
 
